@@ -6,7 +6,7 @@ import type { Express } from "express";
 import { nanoid } from "nanoid";
 import { createServer as createViteServer, createLogger } from "vite";
 
-import runApp from "./app";
+import runApp from "./index";
 
 import viteConfig from "../vite.config";
 
@@ -63,3 +63,4 @@ export async function setupVite(app: Express, server: Server) {
 (async () => {
   await runApp(setupVite);
 })();
+
