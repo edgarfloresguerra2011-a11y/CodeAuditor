@@ -88,3 +88,19 @@ export default async function runApp(
     log(`serving on port ${port}`);
   });
 }
+
+// --- CODIGO AÑADIDO AUTOMATICAMENTE PARA RENDER ---
+const _port = process.env.PORT || 5000;
+try {
+  if (typeof app !== 'undefined') {
+    app.listen(_port, "0.0.0.0", () => {
+      console.log("🚀 SERVIDOR INICIADO EN EL PUERTO " + _port);
+      console.log("✅ CodeAuditor está VIVO y escuchando.");
+    });
+  } else {
+    console.log("⚠️ Variable 'app' no encontrada, intentando mantener proceso vivo...");
+    setInterval(() => console.log('Keep-alive...'), 60000);
+  }
+} catch (e) {
+  console.error("Error al iniciar servidor:", e);
+}
