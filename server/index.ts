@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (req.path.startsWith("/api")) {
-      console.log(\\ \ \ in \ms\);
+      console.log(`${req.method} ${req.path} ${res.statusCode} in ${duration}ms`);
     }
   });
   next();
@@ -65,3 +65,4 @@ const port = process.env.PORT || 5000;
 server.listen(port, "0.0.0.0", () => {
   console.log(\🚀 SERVIDOR COMPLETO (API + WEB) ESCUCHANDO EN EL PUERTO \\);
 });
+
