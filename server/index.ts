@@ -104,3 +104,37 @@ try {
 } catch (e) {
   console.error("Error al iniciar servidor:", e);
 }
+
+// --- CODIGO PARA MOSTRAR LA PAGINA WEB (FRONTEND) ---
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Configurar rutas para archivos
+const __filename_fix = fileURLToPath(import.meta.url);
+const __dirname_fix = path.dirname(__filename_fix);
+
+// 1. Servir archivos estáticos (CSS, JS, Imágenes) desde dist/public
+// Render guarda el build en ../dist/public relativo al servidor
+if (typeof app !== 'undefined') {
+    console.log("🌍 Configurando servicio de archivos estáticos...");
+    app.use(express.static(path.join(__dirname_fix, "../dist/public")));
+    app.use(express.static(path.join(__dirname_fix, "../client/dist")));
+
+    // 2. Ruta 'comodín': Cualquier ruta que no sea API, devuelve el index.html
+    // Esto es necesario para que React funcione al recargar
+    app.get("*", (req, res, next) => {
+        if (req.path.startsWith("/api")) return next();
+        
+        const fs = require('fs');
+        // Intentar ruta de Render
+        const indexRender = path.join(__dirname_fix, "../dist/public/index.html");
+        if (fs.existsSync(indexRender)) return res.sendFile(indexRender);
+
+        // Intentar ruta local
+        const indexLocal = path.join(__dirname_fix, "../client/dist/index.html");
+        if (fs.existsSync(indexLocal)) return res.sendFile(indexLocal);
+        
+        next();
+    });
+}
+// ----------------------------------------------------
