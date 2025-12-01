@@ -83,3 +83,29 @@ export const mockups = pgTable("mockups", {
 
 export const insertMockupSchema = createInsertSchema(mockups);
 export const selectMockupSchema = createInsertSchema(mockups);
+
+// --- EXPORTS (LO QUE FALTABA) ---
+export const exports = pgTable("exports", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  format: text("format").notNull(), // 'pdf', 'docx', etc
+  status: text("status").notNull(),
+  url: text("url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertExportSchema = createInsertSchema(exports);
+export const selectExportSchema = createInsertSchema(exports);
+
+// --- TRANSLATIONS (LO QUE FALTABA) ---
+export const translations = pgTable("translations", {
+  id: serial("id").primaryKey(),
+  projectId: integer("project_id").notNull(),
+  targetLanguage: text("target_language").notNull(),
+  status: text("status").notNull(),
+  translatedContent: jsonb("translated_content"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTranslationSchema = createInsertSchema(translations);
+export const selectTranslationSchema = createInsertSchema(translations);
